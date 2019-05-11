@@ -60,8 +60,8 @@ def train():
 
         # イテレーション
         for sequence, answer in progress_bar(train_data_loader, parent=mb):
-            sequence.to(device)
-            answer.to(device)
+            sequence = sequence.to(device)
+            answer = answer.to(device)
             predicted = predictor.forward(sequence)  # 前向き計算（ラベル予測）
             loss = criterion(predicted, answer)  # クロスエントロピー誤差の計算
 
@@ -80,8 +80,8 @@ def train():
 
             # テストデータのイテレーションを回す
             for sequence, answer in test_data_loader:
-                sequence.to(device)
-                answer.to(device)
+                sequence = sequence.to(device)
+                answer = answer.to(device)
                 predicted = predictor.forward(sequence)  # 前向き計算（ラベル予測）
                 predicted_label = torch.argmax(predicted)  # 確率が最大となるラベルを予測ラベルとする
                 if predicted_label.item() == answer.item():
